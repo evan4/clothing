@@ -4,14 +4,14 @@ import {Switch, Route} from 'react-router-dom'
 import './App.css';
 
 import HomePage from './pages/homepage/HomePage'
+import ShopPage from './pages/shop/ShopPage'
 
 function App() {
   return (
     <div className="">
       <Switch>
-        <Route exact oath="/" component={HomePage}/>
-        <Route exact oath="/topics" component={TopicsPage}/>
-        <Route oath="/topics/:topicId" component={TopicDetail}/>
+        <Route exact path="/" component={HomePage}/>
+        <Route path="/shop" component={ShopPage}/>
       </Switch>
     </div>
   );
