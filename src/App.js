@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -10,7 +10,7 @@ import HomePage from './pages/homepage/HomePage'
 import ShopPage from './pages/shop/ShopPage'
 import Sing from './pages/sign/Sing'
 import {auth, createUserProfileDocument} from './firebase/firebase.utils';
-import {setCurrentUser } from './redux/user/user.actions';
+import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends Component {
 
@@ -46,15 +46,20 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route path="/shop" component={ShopPage}/>
-          <Route path="/singin" component={Sing}/>
+          <Route exact path="/singin" 
+          render={() => this.props.currentUser ? (<Redirect to="/"/>) : (<Sing/>) }/>
         </Switch>
       </div>
     )
   }
 }
 
+const mapStateToProps = ({user}) => ({
+  currentUser: user.currentUser
+})
+
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
